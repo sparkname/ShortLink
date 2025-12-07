@@ -41,6 +41,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         
+        <!-- Redisson (用于布隆过滤器) -->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+            <version>3.23.5</version>
+        </dependency>
         <!-- RabbitMQ 消息队列 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -50,7 +56,7 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>4.0.0</version>
+            <version>3.0.3</version>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -114,7 +120,7 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter-test</artifactId>
-            <version>4.0.0</version>
+            <version>3.0.3</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

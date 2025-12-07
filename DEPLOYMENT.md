@@ -13,7 +13,130 @@
 
 ## 🚀 完整部署流程
 
-### 方案一: Docker 快速部署(推荐)
+### 方案一: Docker Compose 一键部署 (强烈推荐)
+
+使用 Docker Compose 可以一键启动所有服务(MySQL、Redis、RabbitMQ、应用),这是最简单快速的部署方式。
+
+#### 前置要求
+
+1. 安装 Docker Desktop (Windows/macOS)
+   - 下载地址: https://www.docker.com/products/docker-desktop
+   - 安装后启动 Docker Desktop
+
+2. 验证安装
+   ```powershell
+   docker --version
+   docker-compose --version
+   ```
+
+#### 一键启动所有服务
+
+```powershell
+# 进入项目目录
+cd c:\Users\lin\Desktop\java-test2\short-link-service
+
+# 构建并启动所有服务 (首次运行会较慢,需要下载镜像)
+docker-compose up -d
+
+# 查看服务状态
+docker-compose ps
+
+# 查看日志
+docker-compose logs -f app
+```
+
+#### 验证部署
+
+1. **检查容器状态**
+   ```powershell
+   docker-compose ps
+   # 应该看到 4 个容器: mysql, redis, rabbitmq, app
+   ```
+
+2. **访问服务**
+   - 应用主页: http://localhost:8080
+   - RabbitMQ 管理界面: http://localhost:15672 (admin/admin123)
+   - 健康检查: http://localhost:8080/actuator/health
+
+3. **测试短链接功能**
+   ```powershell
+   # 创建短链接
+   $body = @{
+       originalUrl = "https://www.github.com"
+       expirationHours = 24
+   } | ConvertTo-Json
+   
+   Invoke-RestMethod -Uri "http://localhost:8080/api/short-link" `
+                     -Method POST `
+                     -Body $body `
+                     -ContentType "application/json"
+   ```
+
+#### 常用命令
+
+```powershell
+# 停止所有服务
+docker-compose stop
+
+# 启动所有服务
+docker-compose start
+
+# 重启所有服务
+docker-compose restart
+
+# 停止并删除所有容器
+docker-compose down
+
+# 停止并删除容器+数据卷(清空所有数据)
+docker-compose down -v
+
+# 查看特定服务的日志
+docker-compose logs -f app      # 应用日志
+docker-compose logs -f mysql    # MySQL 日志
+docker-compose logs -f redis    # Redis 日志
+
+# 进入容器
+docker-compose exec app sh      # 进入应用容器
+docker-compose exec mysql bash  # 进入 MySQL 容器
+docker-compose exec redis sh    # 进入 Redis 容器
+
+# 重新构建应用镜像
+docker-compose build app
+
+# 重新构建并启动
+docker-compose up -d --build
+```
+
+#### 常见问题
+
+**Q1: 端口被占用**
+```
+Error: Bind for 0.0.0.0:8080 failed: port is already allocated
+```
+解决方法: 修改 `docker-compose.yml` 中的端口映射,或停止占用端口的程序
+
+**Q2: 应用启动失败**
+```powershell
+# 查看详细日志
+docker-compose logs app
+
+# 常见原因:
+# 1. 数据库未就绪 - 等待 30-60 秒后自动重试
+# 2. 内存不足 - 在 Docker Desktop 中增加内存限制
+# 3. 配置错误 - 检查 application.properties
+```
+
+**Q3: 数据持久化**
+Docker Compose 会自动创建数据卷来持久化数据:
+- `mysql-data`: MySQL 数据
+- `redis-data`: Redis 数据
+- `rabbitmq-data`: RabbitMQ 数据
+
+即使删除容器,数据也会保留。如需清空数据,使用 `docker-compose down -v`
+
+---
+
+### 方案二: Docker 手动部署(适合学习理解)
 
 #### 1. 启动 RabbitMQ
 ```powershell

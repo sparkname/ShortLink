@@ -1,0 +1,34 @@
+{
+  "短链接跳转请求" : {
+    "transaction" : "短链接跳转请求",
+    "sampleCount" : 50000,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 118.85742000000018,
+    "medianResTime" : 133.0,
+    "minResTime" : 3.0,
+    "maxResTime" : 628.0,
+    "pct1ResTime" : 205.0,
+    "pct2ResTime" : 231.0,
+    "pct3ResTime" : 303.0,
+    "throughput" : 1705.7278340667963,
+    "receivedKBytesPerSec" : 262.57214695698156,
+    "sentKBytesPerSec" : 193.22698120287927
+  },
+  "Total" : {
+    "transaction" : "Total",
+    "sampleCount" : 50000,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 118.85742000000018,
+    "medianResTime" : 133.0,
+    "minResTime" : 3.0,
+    "maxResTime" : 628.0,
+    "pct1ResTime" : 205.0,
+    "pct2ResTime" : 231.0,
+    "pct3ResTime" : 303.0,
+    "throughput" : 1705.7278340667963,
+    "receivedKBytesPerSec" : 262.57214695698156,
+    "sentKBytesPerSec" : 193.22698120287927
+  }
+}

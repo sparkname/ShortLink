@@ -1,0 +1,8 @@
+# Docker 配置文件说明
+target/
+.idea/
+*.iml
+.DS_Store
+*.log
+*.tmp
+.mvn/wrapper/maven-wrapper.jar
